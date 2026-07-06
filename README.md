@@ -11,7 +11,7 @@ sob orientação do professor Tiago Silva no Instituto Infnet.
 Servidores geram milhões de linhas de log por dia. Analisá-las manualmente
 é inviável. Este script monitora arquivos de log em tempo real, detecta
 padrões de ataque como tentativas repetidas de autenticação e envia alertas
-automáticos via webhook — usando apenas bibliotecas nativas do Python.
+automáticos via webhook - usando apenas bibliotecas nativas do Python.
 
 ## Como funciona
 
