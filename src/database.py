@@ -18,5 +18,3 @@ class Database:
         )
     """)
         self.conexao.commit()
-        db = Database("cyber_security.db")
-        db.inicializar_tabela()
