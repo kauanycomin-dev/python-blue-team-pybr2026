@@ -3,9 +3,11 @@ from datetime import datetime
 
 class LogReader:
 
-    def __init__(self, caminho_arquivo, id_cliente):
+    def __init__(self, caminho_arquivo, id_cliente, tag_empresa, origem): 
         self.id_cliente = id_cliente 
         self.caminho_arquivo = caminho_arquivo
+        self.tag_empresa = tag_empresa
+        self.origem = origem
 
     def monitorar(self):
         with open(self.caminho_arquivo, "r") as arquivo:
@@ -18,6 +20,8 @@ class LogReader:
                         yield {
                             "id_cliente": self.id_cliente,
                             "log_raw": linha_limpa,
+                            "tag_empresa": self.tag_empresa,
+                            "origem": self.origem,
                             "timestamp": datetime.now().isoformat()
                         }
                 else:
