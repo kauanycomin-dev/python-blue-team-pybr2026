@@ -28,17 +28,14 @@ class Database:
             # Executa o comando SQL DDL para criar a tabela com os campos da arquitetura
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS logs (
-                    id_linha INTEGER PRIMARY KEY AUTOINCREMENT,  -- Identificador único autoincrementado
-                    id_cliente TEXT,                             -- Identificador do cliente
+                    id_logs INTEGER PRIMARY KEY AUTOINCREMENT,  -- Identificador único autoincrementado
+                    id_cliente TEXT,       eu não                      -- Identificador do cliente
                     tag_empresa TEXT,                            -- Rótulo da empresa
                     origem TEXT,                                 -- Origem do log (ex: nginx_main)
-                    timestamp TEXT,                              -- Carimbo de data/hora da ingestão
+                    timestamp TIMESTAMP,                              -- Carimbo de data/hora da ingestão
                     log_raw TEXT                                 -- Linha de log bruta enviada pelo servidor
                 )
             """)
-            
-            # Grava e confirma as alterações no arquivo do banco de dados
-            conexao.commit()
 
     def salvar_log(self, pacote):
         """
@@ -58,6 +55,3 @@ class Database:
                 pacote["log_raw"],
                 pacote["timestamp"]
             ))
-            
-            # Efetiva a gravação do registro no banco de dados
-            conexao.commit()
