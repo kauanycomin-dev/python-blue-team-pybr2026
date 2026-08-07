@@ -1,4 +1,4 @@
-import os # tudo que envolve o sistema de arquivos do computador passa pelo os
+import os
 import time
 from datetime import datetime
 
@@ -7,17 +7,24 @@ class LogReader:
     Classe responsável pelo monitoramento contínuo de arquivos de log em tempo real.
     """
     def __init__(self, caminho_arquivo: str, id_cliente: str, tag_empresa: str, origem: str, intervalo: float = 0.1):
+        # Valida se o caminho é um arquivo dentro da pasta permitida
+        caminho_absoluto = os.path.abspath(caminho_arquivo)
+        pasta_permitida = os.path.abspath("logs")
+
+        if not caminho_absoluto.startswith(pasta_permitida):
+            raise ValueError(f"Caminho fora da pasta permitida: {caminho_arquivo}")
+
         # Guarda o caminho local do arquivo de log (.log)
         self.caminho_arquivo = caminho_arquivo
-        
+
         # Guarda os metadados associados ao servidor/cliente monitorado
         self.id_cliente = id_cliente
         self.tag_empresa = tag_empresa
         self.origem = origem
-        
+
         # Intervalo de espera entre verificações quando não há linha nova
         self.intervalo = intervalo
-        
+
         # Contador de linhas processadas desde o início do monitoramento
         self.linhas_processadas = 0
 
@@ -31,15 +38,15 @@ class LogReader:
 
         # encoding="utf-8" e errors="ignore" evitam interrupções por caracteres inválidos ou maliciosos
         with open(self.caminho_arquivo, "r", encoding="utf-8", errors="ignore") as arquivo:
-            
+
             # Move o ponteiro direto para o final do arquivo
             # Permite monitorar eventos novos sem reprocessar o histórico
             arquivo.seek(0, 2)
-            
+
             # Loop infinito para monitoramento contínuo
             while True:
                 linha = arquivo.readline()
-                
+
                 # Remove espaços e quebras de linha, verifica se há conteúdo
                 if linha_limpa := linha.strip():
                     self.linhas_processadas += 1
