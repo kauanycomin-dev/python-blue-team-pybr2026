@@ -3,4 +3,6 @@ cyber_security.db
 __pycache__/
 *.pyc
 .vscode/
-.idea/
+.idea/cyber_security.db
+cyber_security.db-wal
+cyber_security.db-shm
