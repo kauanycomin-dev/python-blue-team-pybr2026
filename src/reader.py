@@ -47,8 +47,11 @@ class LogReader:
             while True:
                 linha = arquivo.readline()
 
-                # Remove espaços e quebras de linha, verifica se há conteúdo
-                if linha_limpa := linha.strip():
+                # Remove espaços e quebras de linha
+                linha_limpa = linha.strip()
+                
+                # Verifica se há conteúdo após a limpeza
+                if linha_limpa:
                     self.linhas_processadas += 1
                     # O 'yield' pausa a função e envia um pacote por vez, economizando RAM
                     yield {
