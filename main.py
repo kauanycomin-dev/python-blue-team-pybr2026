@@ -1,6 +1,10 @@
+from urllib.parse import unquote
+
 # Importação das classes desacopladas mantidas na pasta src/
 from src.reader import LogReader
 from src.database import Database
+from src.analyzer import analisar_requisicao
+from src.notifier import DiscordNotifier
 
 def main():
     """
@@ -9,6 +13,9 @@ def main():
     # 1. Instancia a base de dados e garante a presença da tabela 'logs'
     db = Database("cyber_security.db")
     db.inicializar_tabela()
+
+    #instancia o despachante de alertas para o dioscord
+    notifier = DiscordNotifier()
 
     # 2. Instancia o leitor definindo o arquivo e os metadados do cliente
     log_reader = LogReader(
@@ -24,6 +31,13 @@ def main():
     try:
         # O loop consome linha por linha enviada pelo gerador 'yield' do leitor
         for pacote in log_reader.monitorar():
+
+            #decodifica o log bruto para analise
+            log_decodificado = unquote(log_raw)
+
+            #analisa a log decofidicada e retorna um objeto ResultadoAnalise
+            resultado = analisar_requisicao(log_decodificado)
+            
             # Grava o registro recebido no banco de dados SQLite
             db.salvar_log(pacote)
             
