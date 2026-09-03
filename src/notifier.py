@@ -8,7 +8,7 @@ import urllib.request
 
 #importa os tipos do seu script de análise
 #(caso estejam no arquivo analyzer.py, mantenha assim; se estiverem juntos, ignore o import)
-from analyzer import ResultadoAnalise, Severidade
+from src.analyzer import ResultadoAnalise, Severidade
 
 logger = logging.getLogger("detector_ameacas.notifier")
 
