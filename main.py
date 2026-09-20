@@ -3,7 +3,7 @@ from urllib.parse import unquote
 # Importação das classes desacopladas mantidas na pasta src/
 from src.reader import LogReader
 from src.database import Database
-from src.analyzer import analisar_requisicao
+from src.analyzer import analisar_requisicao, extrair_ip
 from src.notifier import DiscordNotifier
 
 
@@ -15,7 +15,7 @@ def main():
     db = Database("cyber_security.db")
     db.inicializar_tabela()
 
-    # instancia o despachante de alertas para o dioscord
+    # instancia o despachante de alertas para o discord
     notifier = DiscordNotifier()
 
     # 2. Instancia o leitor definindo o arquivo e os metadados do cliente
@@ -34,22 +34,26 @@ def main():
 
             log_raw = pacote.get("log_raw", "")
 
-            #decodifica o log bruto para analise
+            # decodifica o log bruto para análise
             log_decodificado = unquote(log_raw)
 
-            #analisa a log decofidicada e retorna um objeto ResultadoAnalise
+            # analisa o log decodificado e retorna um objeto ResultadoAnalise
             resultado = analisar_requisicao(log_decodificado)
 
-            #gfrava o registro recebido no banco de dados SQLite
+            # grava o registro recebido no banco de dados SQLite
             db.salvar_log(pacote)
+
             if resultado.eh_ameaca():
                 print(
                     f"🚨 [AMEAÇA DETECTADA] [{resultado.severidade.value}] "
                     f"Tipo: {resultado.tipo_ataque} | Trecho: {resultado.trecho_suspeito}"
                 )
+
+                ip_atacante = extrair_ip(log_raw)
+
                 notifier.enviar_alerta(
                     resultado,
-                    ip_origem=pacote.get("id_cliente", "IP Não Identificado"),
+                    ip_origem=ip_atacante,
                 )
             else:
                 print(

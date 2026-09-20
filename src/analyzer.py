@@ -132,6 +132,10 @@ def analisar_lote(payloads: list[str]) -> list[ResultadoAnalise]:
     """analisa uma lista de requisições de uma vez e retorna os resultados."""
     return [analisar_requisicao(p) for p in payloads]
 
+def extrair_ip(log_raw: str) -> str:
+    """Extrai o endereço IP do início de uma linha de log."""
+    match = re.search(r"\d+\.\d+\.\d+\.\d+", log_raw)
+    return match.group(0) if match else "IP Não Identificado"
 
 #interface de linha de comando
 def main() -> None:
