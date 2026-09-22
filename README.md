@@ -248,13 +248,11 @@ python main.py
 
 ## 👥 Autores
 
-| <br>
 
-<br>Wiliam Maia | <br>
-
-<br>Kauany Comin |
-| --- | --- |
-| Idealização, Arquitetura de Segurança, Analisador e Notificações | Estruturação, Infraestrutura de Dados, Ingestão e Persistência |
+<br>Wiliam Maia 
+|Idealização, Arquitetura de Segurança, Analisador e Notificações| 
+<br>Kauany Comin
+|Estruturação, Infraestrutura de Dados, Ingestão e Persistência|
 
 * **Orientador:** Prof. Tiago Silva (*Instituto Infnet — Engenharia de Software*)
 * **Evento:** Python Brasil 2026 — Florianópolis/SC *(14 a 19 de outubro de 2026)*
